@@ -84,7 +84,6 @@ export default function Game() {
   function handlePlay(nextSquares, index) {
     nextSquares.push(index);
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
-    console.log(nextHistory);
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   }
@@ -95,29 +94,29 @@ export default function Game() {
 
   const moves = history.map((squares, move) => {
     let description, row, col;
-    console.log(0 % 3);
-    console.log(0 % 3);
     if (
       history[move][history[move].length - 1] ||
       history[move][history[move].length - 1] == 0
     ) {
       const latestMoveSquare = history[move][history[move].length - 1];
-      console.log(latestMoveSquare);
       col = 1 + (latestMoveSquare % 3);
       row = 1 + Math.floor(latestMoveSquare / 3);
-      console.log(` row: ${row}, col: ${col}`);
     }
     if (move > 0) {
       description = "Go to move #" + move + ` (row: ${row}, col: ${col})`;
     } else {
       description = "Go to game start";
     }
+    if (row > 0 && col > 0) console.log(true);
     return (
       <li key={move}>
         {currentMove !== move ? (
           <button onClick={() => jumpTo(move)}>{description}</button>
         ) : (
-          <div>you are at #{move}</div>
+          <div>
+            you are at #{move}{" "}
+            {(row > 0) & (col > 0) ? `(row: ${row}, col: ${col})` : ""}
+          </div>
         )}
       </li>
     );
